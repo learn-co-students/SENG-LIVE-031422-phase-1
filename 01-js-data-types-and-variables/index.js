@@ -3,7 +3,11 @@
 // Using console.log()
 // Run `node` in terminal to enter a REPL
 // Debugger
-
+function number(num1, num2) {
+    console.log(num1 = 8)
+    console.log(num2 = 1)
+    return num1 + num2
+}
 // ------------ Variables: ------------
 
 // What is a variable?
