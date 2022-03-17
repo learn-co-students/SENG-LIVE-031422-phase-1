@@ -177,12 +177,12 @@ const pokemon = ["Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Cha
 
 // Using map, return a new array with all pokemon character names lowercased.
 
-const newArr = pokemon.map(function(character){
-    const firstLetter = character.charAt(0).toLowerCase()
-    const restOfString = character.slice(1)
-    const newName = firstLetter + restOfString
-    return newName
-})
+// const newArr = pokemon.map(function(character){
+//     const firstLetter = character.charAt(0).toLowerCase()
+//     const restOfString = character.slice(1)
+//     const newName = firstLetter + restOfString
+//     return newName
+// })
 
 // Searching an array: .find() vs .filter()
 
@@ -194,14 +194,35 @@ const newArr = pokemon.map(function(character){
 
 
 
-const arr = "this is a string".split(" ")
+// const arr = "this is a string".split(" ")
 
 
-const x = arr.map(el => {
-    const firstLetter = el.charAt(0).toUpperCase()
-    const restOfString = el.slice(1)
-    const newString = firstLetter + restOfString
-    return newString
-})
+// const x = arr.map(el => {
+//     const firstLetter = el.charAt(0).toUpperCase()
+//     const restOfString = el.slice(1)
+//     const newString = firstLetter + restOfString
+//     return newString
+// })
 
-console.log(x.join(" "))
+// console.log(x.join(" "))
+
+
+// find all the characters whos name starts with 'S' 
+
+// .find(callbackFunction)
+// needs to be called on an array
+// to search for something
+// return value of find is going to be 1 element/ not an array 
+
+// const result = pokemon.find((character) => character.startsWith("S"))
+
+// console.log("result:", result)
+
+// .filter() 
+// needs to be called on an array  
+// to search for something
+// return value is a new array of the matched items as the elements 
+
+const result = pokemon.filter((character) => character.startsWith("S"))
+
+console.log("result:", result)
