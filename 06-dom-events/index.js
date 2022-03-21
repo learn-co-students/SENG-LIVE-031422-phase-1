@@ -46,9 +46,6 @@ function renderPokemon(char) {
   pokeImg.src = char.img;
   pokeImg.alt = `${char.name} image`;
 
-  const pokeName = document.createElement("h3");
-  pokeName.textContent = char.name;
-
-  pokeCard.append(pokeImg, pokeName);
+  pokeCard.append(pokeImg);
   pokeContainer.appendChild(pokeCard);
 }
