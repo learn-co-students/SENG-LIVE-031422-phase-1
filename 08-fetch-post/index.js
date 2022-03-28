@@ -1,3 +1,21 @@
+// What is a POST request? creating a new piece of data in our server
+
+// POST: HTTP Verb
+
+// Fetch by default is not going to make a POST request
+
+// second argument is optional, and it is a config object
+// const configObj = {
+//   method: HTTP VERB,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     Accept: 'application/json'
+//   },
+//   body: JSON.stringify(data_obj)
+// }
+
+// fetch(URL, configObj)
+
 const pokeContainer = document.querySelector("#poke-container");
 const pokeForm = document.querySelector("#poke-form");
 const pokeFormContainer = document.querySelector("#poke-form-container");
@@ -18,35 +36,92 @@ const createPokemon = (e) => {
   const img = document.querySelector("#img-input").value;
 
   let newChar = {
-    id: 6, // NEEDS TO CHANGE,
     name,
     img,
     likes: 0,
   };
 
+  // optimistic rendering:
+
+  const configObj = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(newChar),
+  };
+
+  fetch("http://localhost:3000/characters", configObj);
+
   renderPokemon(newChar);
   pokeForm.reset();
+
+  // pessimistic
+  // fetch('http://localhost:3000/characters', {
+  //   method: "POST",
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     Accept: 'application/json'
+  //   },
+  //   body: JSON.stringify(newChar)
+  // })
+  // .then(resp => resp.json())
+  // .then((dbCharacter) => {
+  //   renderPokemon(dbCharacter);
+  //   pokeForm.reset();
+  // })
+
+  // pessimistic or optimistic when rendering data
+
+  // pessimistic: will wait for the server response before showing our user anything
+
+  // optimistic: will render data while the server request is being made
 };
 
 pokeForm.addEventListener("submit", createPokemon);
 
-const increaseLikes = (char, likeNum) => {
+const increaseLikes = (e, char, likeNum) => {
+  e.stopPropagation();
   ++char.likes;
   likeNum.textContent = char.likes;
 };
 
-const renderComment = (comment) => {
+const renderComment = (comment, commentsDiv) => {
   let li = document.createElement("li");
   li.textContent = comment.content;
-
+  commentsDiv.append(li)
   return li;
 };
 
 const commentsForm = () => {
+  debugger;
   let form = document.createElement("form");
   form.id = "comment-form";
 
   // attach an event listener to the #comment-form
+
+  form.addEventListener("submit", function(e){
+    debugger;
+    e.preventDefault();
+
+  // look for the target, but what target? 
+  // the input of the text 
+  const content = e.target.firstChild.nextElementSibling.value
+  const characterId = parseInt(document.querySelector('#poke-show-card').dataset.id)
+
+  // send this data to the server:
+  // first: create a new comment object 
+
+  const newComment = {
+    content, 
+    characterId
+  }
+
+  // TBC:
+  fetch('http://localhost:3000/comments')
+
+  })
 
   let commentInput = document.createElement("input");
   commentInput.type = "text";
@@ -72,8 +147,8 @@ const showCharacter = (character) => {
     .then((character) => {
       const pokeCard = renderPokemon(character);
       pokeCard.id = "poke-show-card";
-      // pokeCard.dataset.id = character.id;
-      // loadComments(pokeCard, char);
+      pokeCard.dataset.id = character.id;
+      loadComments(pokeCard, character);
       pokeContainer.replaceChildren(pokeCard);
       pokeFormContainer.replaceChildren(commentsForm());
       pokeContainer.replaceChildren(pokeCard);
@@ -104,16 +179,33 @@ const renderPokemon = (char) => {
   const likesBttn = document.createElement("button");
   likesBttn.className = "like-bttn";
   likesBttn.textContent = "♥";
-  likesBttn.addEventListener("click", () => increaseLikes(char, likeNum));
+  likesBttn.addEventListener("click", (e) => increaseLikes(e, char, likeNum));
 
   const deleteBttn = document.createElement("button");
   deleteBttn.className = "delete-bttn";
   deleteBttn.textContent = "delete";
-  deleteBttn.addEventListener("click", () => {
+  deleteBttn.addEventListener("click", (e) => {
+    e.stopPropagation();
     pokeCard.remove();
   });
 
   pokeCard.append(pokeImg, pokeName, pokeLikes, likeNum, likesBttn, deleteBttn);
   pokeContainer.appendChild(pokeCard);
   return pokeCard;
+};
+
+const loadComments = (pokeCard, character) => {
+
+  const commentsDiv = document.createElement("div");
+  commentsDiv.id = `comment-card-${character.id}`;
+
+  const h4 = document.createElement("h4");
+  h4.textContent = `${character.comments.length} comments:`;
+
+  commentsDiv.append(h4);
+  pokeCard.append(commentsDiv);
+
+  // how to pass each comment to the renderComment function?
+
+  character.comments.forEach(comment => renderComment(comment, commentsDiv))
 };

@@ -29,6 +29,18 @@
       "name": "charmeleon",
       "img": "https://static.pokemonpets.com/images/monsters-images-800-800/5-Charmeleon.webp",
       "likes": 11
+    },
+    {
+      "name": "Squirtle",
+      "img": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png",
+      "likes": 0,
+      "id": 6
+    },
+    {
+      "name": "Pikachu",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp/220px-Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp.png",
+      "likes": 0,
+      "id": 7
     }
   ],
   "comments": [
@@ -44,7 +56,6 @@
     },
     {
       "id": 2,
-      "user": "Alice",
       "characterId": 2,
       "content": "I love Ivysaur more!"
     }
