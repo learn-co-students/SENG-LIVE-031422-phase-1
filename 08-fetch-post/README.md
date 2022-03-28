@@ -23,15 +23,13 @@
 
 - Assign the id `comment-card-${char.id}` to the commentsDiv.
 
-- Create a new `h4` element and store in the variable `h4`. The new header should return the textContent: `{2} comments:` where the number reflects how many comments each character has associated.
+- Create a new `h4` element and store in the variable `h4`. The new header should return the textContent: `{2} comments:` where the number reflects how many comments each character has associated. HINT: If a character object has a property of 'comments' that returns an array of comment objects, how can we use this to return the number of comments a character has.
 
 - Append the `h4` element to `commentsDiv`
 
 - Append the `commentsDiv` to the `pokeCard`
 
-- Inspect the `character` parameter and think about how each comment associated with the character can be passed to the `renderComment` function that has been defined.
-
-- Comment back in line 104 to test if comments will render to the DOM when a character card is clicked
+- To complete this step, first comment back in like 76. Inspect the `character` parameter passed to 'loadComments()' and think about how each comment associated with the character can be passed to the `renderComment` function that has been defined to be displayed on the DOM.
 
 ### Deliverables
 

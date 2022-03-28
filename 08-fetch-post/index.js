@@ -1,3 +1,7 @@
+const pokeContainer = document.querySelector("#poke-container");
+const pokeForm = document.querySelector("#poke-form");
+const pokeFormContainer = document.querySelector("#poke-form-container");
+
 const getPokemon = () => {
   fetch("http://localhost:3000/characters")
     .then((resp) => resp.json())
@@ -7,9 +11,6 @@ const getPokemon = () => {
 };
 
 getPokemon();
-
-const pokeContainer = document.querySelector("#poke-container");
-const pokeForm = document.querySelector("#poke-form");
 
 const createPokemon = (e) => {
   e.preventDefault();
@@ -34,12 +35,47 @@ const increaseLikes = (char, likeNum) => {
   likeNum.textContent = char.likes;
 };
 
+const renderComment = (comment) => {
+  let li = document.createElement("li");
+  li.textContent = comment.content;
+
+  return li;
+};
+
+const commentsForm = () => {
+  let form = document.createElement("form");
+  form.id = "comment-form";
+
+  // attach an event listener to the #comment-form
+
+  let commentInput = document.createElement("input");
+  commentInput.type = "text";
+  commentInput.id = "comment-input";
+
+  let label = document.createElement("label");
+  label.className = "form-label";
+  label.textContent = "Leave a comment: ";
+  form.appendChild(label);
+
+  let submit = document.createElement("input");
+  submit.type = "submit";
+  submit.id = "submit";
+
+  form.append(commentInput, submit);
+
+  return form;
+};
+
 const showCharacter = (character) => {
   fetch(`http://localhost:3000/characters/${character.id}`)
     .then((resp) => resp.json())
     .then((character) => {
       const pokeCard = renderPokemon(character);
       pokeCard.id = "poke-show-card";
+      // pokeCard.dataset.id = character.id;
+      // loadComments(pokeCard, char);
+      pokeContainer.replaceChildren(pokeCard);
+      pokeFormContainer.replaceChildren(commentsForm());
       pokeContainer.replaceChildren(pokeCard);
     });
 };
