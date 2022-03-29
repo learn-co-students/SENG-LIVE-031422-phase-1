@@ -1,22 +1,10 @@
 {
   "characters": [
     {
-      "id": 1,
-      "name": "bulbasaur",
-      "img": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
-      "likes": 4
-    },
-    {
-      "id": 2,
-      "name": "ivysaur",
-      "img": "https://images.cults3d.com/6VgkTLM1j-CTAMhEJTtsRV1z6N8=/516x516/https://files.cults3d.com/uploaders/14845535/illustration-file/5d09c257-51ed-4d65-aa36-3f9201af34c4/ivysaur.png",
-      "likes": 21
-    },
-    {
       "id": 3,
       "name": "venusaur",
       "img": "https://images.saymedia-content.com/.image/t_share/MTc2MjYwODQ5NTk2NTcyODYy/pokemon-venusaur-nicknames.png",
-      "likes": 7
+      "likes": 11
     },
     {
       "id": 4,
@@ -28,24 +16,66 @@
       "id": 5,
       "name": "charmeleon",
       "img": "https://static.pokemonpets.com/images/monsters-images-800-800/5-Charmeleon.webp",
-      "likes": 11
+      "likes": 18
+    },
+    {
+      "name": "Squirtle",
+      "img": "https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png",
+      "likes": 0,
+      "id": 6
+    },
+    {
+      "name": "Pikachu",
+      "img": "https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp/220px-Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp.png",
+      "likes": 0,
+      "id": 7
     }
   ],
   "comments": [
     {
-      "id": 1,
-      "characterId": 1,
-      "content": "I love Bulbasaur!"
+      "content": "testing this out!",
+      "characterId": 4,
+      "id": 4
     },
     {
-      "id": 2,
-      "characterId": 1,
-      "content": "Bulbasaur is coool!"
+      "content": "wow!!",
+      "characterId": 3,
+      "id": 5
     },
     {
-      "id": 3,
-      "characterId": 2,
-      "content": "I love Ivysaur more!"
+      "content": "charmeleon is great",
+      "characterId": 5,
+      "id": 6
+    },
+    {
+      "content": "amazing!",
+      "characterId": 7,
+      "id": 7
+    },
+    {
+      "content": "test",
+      "characterId": 7,
+      "id": 8
+    },
+    {
+      "content": "amazing!",
+      "characterId": 3,
+      "id": 9
+    },
+    {
+      "content": "test",
+      "characterId": 3,
+      "id": 10
+    },
+    {
+      "content": "amazing!",
+      "characterId": 3,
+      "id": 11
+    },
+    {
+      "content": "adfa",
+      "characterId": 3,
+      "id": 12
     }
   ]
 }

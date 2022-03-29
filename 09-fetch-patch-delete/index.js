@@ -1,9 +1,33 @@
+// ES6 concepts:
+
+// arrow functions 
+// simple object definition: when the key and value have the same identifier, can collapse into one word
+// Destructuring: RULE: which is the variable names need to match the property names
+
+// const student = { name: "Elijah", grade: "Flatiron School "}
+
+// const {name, grade} = student 
+
+// function sayName({name, grade, misc}){
+//   console.log(grade)
+
+//   name 
+//   grade 
+//   misc
+// }
+
+const students = ["elijah", "jacob", "griffin"]
+
+const [e, , g] = students
+
+
+const BASE_URL = 'http://localhost:3000'
 const pokeContainer = document.querySelector("#poke-container");
 const pokeForm = document.querySelector("#poke-form");
 const pokeFormContainer = document.querySelector("#poke-form-container");
 
 const getPokemon = () => {
-  fetch("http://localhost:3000/characters")
+  fetch(`${BASE_URL}/characters`)
     .then((resp) => resp.json())
     .then((characters) => {
       characters.forEach(renderPokemon);
@@ -32,9 +56,9 @@ const createPokemon = (e) => {
     body: JSON.stringify(newChar),
   };
 
-  fetch("http://localhost:3000/characters", configObj);
-
-  renderPokemon(newChar);
+  fetch(`${BASE_URL}/characters`, configObj)
+  .then(resp => resp.json())
+  .then(character => renderPokemon(character))
   pokeForm.reset();
 
 };
@@ -43,9 +67,33 @@ pokeForm.addEventListener("submit", createPokemon);
 
 const increaseLikes = (e, char, likeNum) => {
   e.stopPropagation();
-  ++char.likes;
+
+++char.likes;
+
+const configObj = {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({likes: char.likes})
+}
+  
+// optimistically rendering
+  fetch(`${BASE_URL}/characters/${char.id}`, configObj)
   likeNum.textContent = char.likes;
 };
+
+const deleteChar = (e, pokeCard, char) => {
+  console.log(pokeCard)
+  e.stopPropagation();
+
+  fetch(`${BASE_URL}/characters/${char.id}`, {
+    method: 'DELETE'
+  })
+
+  pokeCard.remove();
+}
 
 const renderComment = (comment, commentsDiv) => {
   let li = document.createElement("li");
@@ -59,7 +107,6 @@ const commentsForm = () => {
   form.id = "comment-form";
 
   form.addEventListener("submit", function (e) {
-    debugger;
     e.preventDefault();
 
     const content = e.target.firstChild.nextElementSibling.value;
@@ -72,8 +119,37 @@ const commentsForm = () => {
       characterId,
     };
 
-    // TBC:
-    fetch("http://localhost:3000/comments");
+    const configObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(newComment)
+    }
+
+    fetch(`${BASE_URL}/comments`, configObj)
+    .then(resp => resp.json())
+    .then(comment => {
+      // do something with it
+      // need to append the comment to the comments div that we identified
+
+      // grab the comments div? 
+      const commentsDiv = document.querySelector(`#comment-card-${characterId}`)
+
+      // grab characters.comments and call .length on that array
+      // manipulate the text content of that h4 to new number
+      const h4 = document.querySelector('h4')
+      fetch(`${BASE_URL}/characters/${characterId}`)
+      .then(resp => resp.json())
+      .then(character => {
+        h4.textContent = `${character.comments.length} comments`
+      })
+      
+      // pass the comment to renderComment
+      renderComment(comment, commentsDiv)
+      form.reset()
+    }) 
   });
 
   let commentInput = document.createElement("input");
@@ -95,7 +171,7 @@ const commentsForm = () => {
 };
 
 const showCharacter = (character) => {
-  fetch(`http://localhost:3000/characters/${character.id}`)
+  fetch(`${BASE_URL}/characters/${character.id}`)
     .then((resp) => resp.json())
     .then((character) => {
       const pokeCard = renderPokemon(character);
@@ -137,10 +213,7 @@ const renderPokemon = (char) => {
   const deleteBttn = document.createElement("button");
   deleteBttn.className = "delete-bttn";
   deleteBttn.textContent = "delete";
-  deleteBttn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    pokeCard.remove();
-  });
+  deleteBttn.addEventListener("click", (e) => deleteChar(e, pokeCard, char));
 
   pokeCard.append(pokeImg, pokeName, pokeLikes, likeNum, likesBttn, deleteBttn);
   pokeContainer.appendChild(pokeCard);
